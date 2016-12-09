@@ -1,0 +1,21 @@
+version: "2"
+services:
+  redis:
+    image: redis:latest
+  db:
+    image: mysql
+    ports:
+      - 13306:3306
+    volumes:
+      - /Users/tomyli/dockers/testmysql/sqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  web:
+    image: tomcat:latest
+    volumes:
+      - /Users/tomyli/github/java/dockerjava/docker-dir/:/usr/local/tomcat/webapps
+    depends_on:
+      - db
+      - redis
+    ports:
+      - 8888:8080
